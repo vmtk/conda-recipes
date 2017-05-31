@@ -34,14 +34,14 @@ requirements:
     - future              [py27]
     - cmake
     - git
-    - vtk ==7.1
-    - itk ==4.10
+    - vtk
+    - itk
 
   run:
     - python
     - future              [py27]
-    - vtk ==7.1
-    - itk ==4.10
+    - vtk
+    - itk
 
 about:
   home: www.vmtk.org
