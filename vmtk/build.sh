@@ -27,6 +27,7 @@ if [ `uname` == Linux ]; then
     cmake ../ \
         -DCMAKE_BUILD_TYPE:STRING="Release" \
         -DUSE_SYSTEM_VTK:BOOL=ON \
+        -DUSE_SYSTEM_ITK:BOOL=ON \
         -DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX}
 
     make -j${CPU_COUNT}

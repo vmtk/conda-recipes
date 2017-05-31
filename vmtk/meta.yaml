@@ -33,11 +33,13 @@ requirements:
     - cmake
     - git
     - vtk
+    - itk
 
   run:
     - python
     - future              [py27]
     - vtk
+    - itk
 
 about:
   home: www.vmtk.org
