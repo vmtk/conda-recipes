@@ -19,9 +19,23 @@ requirements:
     - python
     - cmake >=3.6
     - git
+    - zlib 1.2.*
+    - freetype 2.6.*
+    - libxml2 2.9.*
+    - libpng >=1.6.23,<1.7
+    - jpeg 9*
+    - libtiff 4.0.*
+    - expat
 
   run:
     - python
+    - zlib 1.2.*
+    - freetype 2.6.*
+    - libxml2 2.9.*
+    - libpng >=1.6.23,<1.7
+    - jpeg 9*
+    - libtiff 4.0.*
+    - expat
 
 test:
   imports:

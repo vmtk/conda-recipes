@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ## Program:   VMTK
 ## Module:    Anaconda Distribution
 ## Language:  Python
@@ -20,16 +18,21 @@
 ## VMTK via the Continuum Analytics Anaconda Python distribution.
 ## See https://www.continuum.io/ for distribution info
 
-mkdir vmtk-build
-cd ./vmtk-build
+mkdir build
+cd build
 
-BUILD_CONFIG=Release
+set BUILD_CONFIG=Release
 
-cmake ../ \
-    -Wno-dev \
-    -DCMAKE_BUILD_TYPE:STRING=$BUILD_CONFIG \
-    -DUSE_SYSTEM_VTK:BOOL=ON \
-    -DUSE_SYSTEM_ITK:BOOL=ON \
+:: tell cmake where Python is
+set PYTHON_LIBRARY=%PREFIX%\libs\python%PY_VER:~0,1%%PY_VER:~2,1%.lib
+
+cmake .. -G "NMake Makefiles" ^
+    -Wno-dev ^
+    -DCMAKE_BUILD_TYPE:STRING=%BUILD_CONFIG% ^
+    -DUSE_SYSTEM_VTK:BOOL=ON ^
+    -DUSE_SYSTEM_ITK:BOOL=ON ^
     -DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX}
+if errorlevel 1 exit 1
 
-make -j${CPU_COUNT}
+cmake --build .
+if errorlevel 1 exit 1
