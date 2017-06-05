@@ -17,17 +17,7 @@ requirements:
 about:
   home: https://itk.org/
   license: >
-    The Insight Software Consortium (http://www.insightsoftwareconsortium.org)
-    holds the copyright of this software. This is a non-profit entity that
-    promotes the use of ITK for educational and research purposes. ITK is
-    distributed under a license that enables use for both non-commercial and
-    commercial applications. See https://itk.org/ITK/project/license.html for details.
+     See https://itk.org/ITK/project/license.html for details.
   summary: >
     ITK is an open-source, cross-platform C++ toolkit for segmentation and
-    registration. Segmentation is the process of identifying and classifying
-    data found in a digitally sampled representation. Typically the sampled
-    representation is an image acquired from such medical instrumentation as
-    CT or MRI scanners. Registration is the task of aligning or developing
-    correspondences between data. For example, in the medical environment, a
-    CT scan may be aligned with a MRI scan in order to combine the information
-    contained in both.
+    registration.

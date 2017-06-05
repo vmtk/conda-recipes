@@ -3,14 +3,14 @@
 ## Language:  Python
 ## Date:      May 29, 2017
 
-##   Copyright (c) Luca Antiga, David Steinman. All rights reserved.
+##   Copyright (c) Richard Izzo, Luca Antiga, David Steinman. All rights reserved.
 ##   See LICENCE file for details.
 
 ##      This software is distributed WITHOUT ANY WARRANTY; without even
 ##      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 ##      PURPOSE.  See the above copyright notices for more information.
 
-## Note: this class was contributed by
+## Note: this script was contributed by
 ##       Richard Izzo (Github @rlizzo)
 ##       University at Buffalo; The Jacobs Institute
 
@@ -45,7 +45,7 @@ requirements:
 
 about:
   home: www.vmtk.org
-  license: "See http://www.vmtk.org/license.html"
+  license_file: LICENSE
   summary: "vmtk - the Vascular Modeling Toolkit. See www.vmtk.org/ for details."
 
 

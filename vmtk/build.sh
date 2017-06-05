@@ -5,14 +5,14 @@
 ## Language:  Python
 ## Date:      May 29, 2017
 
-##   Copyright (c) Luca Antiga, David Steinman. All rights reserved.
+##   Copyright (c) Richard Izzo, Luca Antiga, David Steinman. All rights reserved.
 ##   See LICENCE file for details.
 
 ##      This software is distributed WITHOUT ANY WARRANTY; without even
 ##      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 ##      PURPOSE.  See the above copyright notices for more information.
 
-## Note: this class was contributed by
+## Note: this script was contributed by
 ##       Richard Izzo (Github @rlizzo)
 ##       University at Buffalo; The Jacobs Institute
 
@@ -34,3 +34,13 @@ if [ `uname` == Linux ]; then
 
 fi
 
+if [ `uname` == Darwin ]; then
+    cmake ../ \
+        -DCMAKE_BUILD_TYPE:STRING="Release" \
+        -DUSE_SYSTEM_VTK:BOOL=ON \
+        -DUSE_SYSTEM_ITK:BOOL=ON \
+        -DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX}
+
+    make -j${CPU_COUNT}
+
+fi
