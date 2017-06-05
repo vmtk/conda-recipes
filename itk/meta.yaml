@@ -21,3 +21,9 @@ about:
   summary: >
     ITK is an open-source, cross-platform C++ toolkit for segmentation and
     registration.
+
+extra:
+  recipe-maintainers:
+    # GitHub IDs for maintainers of the recipe.
+    - rlizzo
+    - lantiga
