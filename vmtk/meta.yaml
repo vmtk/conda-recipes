@@ -45,7 +45,7 @@ requirements:
 
 about:
   home: www.vmtk.org
-  license_file: LICENSE
+  license_file: ../LICENSE
   summary: "vmtk - the Vascular Modeling Toolkit. See www.vmtk.org/ for details."
 
 
