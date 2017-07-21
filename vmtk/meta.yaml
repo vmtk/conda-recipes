@@ -42,6 +42,8 @@ requirements:
     - future              [py27]
     - vtk
     - itk
+    - numpy
+    - h5py
 
 about:
   home: www.vmtk.org
