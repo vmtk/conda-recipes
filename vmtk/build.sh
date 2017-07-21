@@ -24,17 +24,29 @@ mkdir vmtk-build
 cd ./vmtk-build
 
 BUILD_CONFIG=Release
+if [ `uname` = "Darwin" ]; then
+    cmake ../ \
+        -Wno-dev \
+        -DCMAKE_BUILD_TYPE:STRING=$BUILD_CONFIG \
+        -DCMAKE_PREFIX_PATH:PATH="${PREFIX}" \
+        -DCMAKE_INSTALL_PREFIX:PATH="${PREFIX}" \
+        -DCMAKE_INSTALL_RPATH:PATH="${PREFIX}/lib" \
+        -DUSE_SYSTEM_VTK:BOOL=ON \
+        -DUSE_SYSTEM_ITK:BOOL=ON \
+        -DVMTK_BREW_PYTHON:BOOL=OFF \
+        -DVMTK_USE_SUPERBUILD:BOOL=OFF
 
-cmake ../ \
-    -Wno-dev \
-    -DCMAKE_BUILD_TYPE:STRING=$BUILD_CONFIG \
-    -DCMAKE_PREFIX_PATH:PATH="${PREFIX}" \
-    -DCMAKE_INSTALL_PREFIX:PATH="${PREFIX}" \
-    -DCMAKE_INSTALL_RPATH:PATH="${PREFIX}/lib" \
-    -DUSE_SYSTEM_VTK:BOOL=ON \
-    -DUSE_SYSTEM_ITK:BOOL=ON \
-    -DVMTK_BREW_PYTHON:BOOL=OFF \
-    -DVMTK_USE_SUPERBUILD:BOOL=OFF
+    make -j${CPU_COUNT}
+    make install
+fi
 
-make -j${CPU_COUNT}
-make install
+if [ `uname` = "Linux" ]; then
+    cmake ../ \
+        -Wno-dev \
+        -DCMAKE_BUILD_TYPE:STRING=$BUILD_CONFIG \
+        -DUSE_SYSTEM_VTK:BOOL=ON \
+        -DUSE_SYSTEM_ITK:BOOL=ON \
+        -DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX}
+
+    make -j${CPU_COUNT}
+fi
