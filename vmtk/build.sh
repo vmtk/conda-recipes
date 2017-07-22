@@ -33,7 +33,10 @@ if [ `uname` = "Darwin" ]; then
         -DCMAKE_INSTALL_RPATH:PATH="${PREFIX}/lib" \
         -DUSE_SYSTEM_VTK:BOOL=ON \
         -DUSE_SYSTEM_ITK:BOOL=ON \
+        -DVTK_VMTK_USE_COCOA:BOOL=ON \
+        -DVMTK_RENDERING_BACKEND:STRING=OpenGL2 \
         -DVMTK_BREW_PYTHON:BOOL=OFF \
+        -DVMTK_USE_RENDERING:BOOL=ON \
         -DVMTK_USE_SUPERBUILD:BOOL=OFF
 
     make -j${CPU_COUNT}
