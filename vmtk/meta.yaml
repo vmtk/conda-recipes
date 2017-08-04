@@ -28,6 +28,9 @@ source:
 channels:
   - vmtk
 
+build:
+  number: 1
+
 requirements:
   build:
     - python
@@ -53,5 +56,5 @@ about:
 
 extra:
   recipe-maintainers:
-    -rlizzo
-    -lantiga
+    - rlizzo
+    - lantiga
