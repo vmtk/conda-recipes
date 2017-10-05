@@ -34,13 +34,13 @@ requirements:
     - future              [py27]
     - cmake
     - git
-    - vtk
+    - vtk >=7.1
     - itk
 
   run:
     - python
     - future              [py27]
-    - vtk
+    - vtk >=7.1
     - itk
     - numpy
     - h5py
