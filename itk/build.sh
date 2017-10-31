@@ -8,7 +8,7 @@ BUILD_CONFIG=Release
 # choose different settings for OS X and Linux
 if [ `uname` = "Darwin" ]; then
     SCREEN_ARGS=(
-        "-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.10"
+        "-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.11"
         "-DCMAKE_INSTALL_RPATH:PATH=${PREFIX}/lib"
     )
 else
