@@ -18,7 +18,7 @@ else
     )
 fi
 
-cmake .. \
+cmake .. -G "Ninja"\
     -Wno-dev \
     -DCMAKE_BUILD_TYPE=$BUILD_CONFIG \
     -DCMAKE_PREFIX_PATH:PATH="${PREFIX}" \
@@ -28,7 +28,7 @@ cmake .. \
     -DBUILD_TESTING:BOOL=OFF \
     -DBUILD_EXAMPLES:BOOL=OFF \
     -DBUILD_SHARED_LIBS:BOOL=ON \
-    -DVTK_ENABLE_VTKPYTHON:BOOL=OFF \
+    -DVTK_ENABLE_VTKPYTHON:BOOL=ON \
     -DVTK_WRAP_PYTHON:BOOL=ON \
     -DVTK_PYTHON_VERSION:STRING="${PY_VER}" \
     -DVTK_INSTALL_PYTHON_MODULE_DIR:PATH="${SP_DIR}" \
@@ -46,5 +46,4 @@ cmake .. \
     -DVTK_USE_SYSTEM_JSONCPP:BOOL=OFF \
     ${SCREEN_ARGS[@]}
 
-make -j${CPU_COUNT}
-make install
+ninja install
