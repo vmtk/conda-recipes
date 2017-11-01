@@ -1,37 +1,42 @@
+@echo off
+setlocal EnableDelayedExpansion
+
 mkdir build
 cd build
 
-set BUILD_CONFIG=Release
+if "%PY_VER%" == "3.4" (
+    set GENERATOR=Visual Studio 10 2010
+) else (
+    if "%PY_VER%" == "3.5" (
+        set GENERATOR=Visual Studio 14 2015
+    ) else (
+      if "%PY_VER%" == "3.6" (
+          set GENERATOR=Visual Studio 15 2017
+      ) else (
+        set GENERATOR=Visual Studio 9 2008
+      )
+    )
+)
 
-:: tell cmake where Python is
-set PYTHON_LIBRARY=%PREFIX%\libs\python%PY_VER:~0,1%%PY_VER:~2,1%.lib
+if %ARCH% EQU 64 (
+    set GENERATOR=%GENERATOR% Win64
+)
 
-cmake .. -G "NMake Makefiles" ^
-    -Wno-dev ^
-    -DCMAKE_BUILD_TYPE=%BUILD_CONFIG% ^
-    -DCMAKE_INSTALL_PREFIX:PATH=%LIBRARY_PREFIX% ^
-    -DBUILD_DOCUMENTATION:BOOL=OFF ^
-    -DBUILD_TESTING:BOOL=OFF ^
-    -DBUILD_EXAMPLES:BOOL=OFF ^
-    -DBUILD_SHARED_LIBS:BOOL=ON ^
-    -DPYTHON_EXECUTABLE:FILEPATH=%PYTHON% ^
-    -DPYTHON_INCLUDE_DIR:PATH="%PREFIX%\include" ^
-    -DPYTHON_LIBRARY:FILEPATH=%PYTHON_LIBRARY% ^
-    -DVTK_ENABLE_VTKPYTHON:BOOL=OFF ^
-    -DVTK_WRAP_PYTHON:BOOL=ON ^
-    -DVTK_PYTHON_VERSION:STRING=%PY_VER% ^
-    -DVTK_INSTALL_PYTHON_MODULE_DIR:PATH=%SP_DIR% ^
-    -DVTK_HAS_FEENABLEEXCEPT:BOOL=OFF ^
-    -DVTK_RENDERING_BACKEND=OpenGL2 ^
-    -DModule_vtkRenderingMatplotlib=ON ^
-    -DVTK_USE_SYSTEM_ZLIB:BOOL=OFF ^
-    -DVTK_USE_SYSTEM_FREETYPE:BOOL=OFF ^
-    -DVTK_USE_SYSTEM_LIBXML2:BOOL=OFF ^
-    -DVTK_USE_SYSTEM_PNG:BOOL=OFF ^
-    -DVTK_USE_SYSTEM_JPEG:BOOL=OFF ^
-    -DVTK_USE_SYSTEM_TIFF:BOOL=OFF ^
-    -DVTK_USE_SYSTEM_EXPAT:BOOL=OFF
-if errorlevel 1 exit 1
+cmake -LAH .. -G"%GENERATOR%" ^
+-DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
+-DCMAKE_BUILD_TYPE=Release ^
+-DINSTALL_BIN_DIR=%LIBRARY_BIN% ^
+-DINSTALL_INC_DIR=%LIBRARY_INC% ^
+-DINSTALL_LIB_DIR=%LIBRARY_LIB% ^
+-DBUILD_SHARED_LIBS=1 ^
+-DBUILD_EXAMPLES=0 ^
+-DBUILD_TESTING=0 ^
+-DBUILD_DOCUMENTATION=0 ^
+-DBUILD_SHARED_LIBS=1 ^
+-DPYTHON_EXECUTABLE=%PYTHON% ^
+-DVTK_WRAP_PYTHON=1 ^
+-DVTK_RENDERING_BACKEND=%BACKEND% ^
+-DVTK_INSTALL_PYTHON_MODULE_DIR=%SP_DIR%
 
-cmake --build . --target INSTALL --config Release
-if errorlevel 1 exit 1
+cmake --build . --config Release --target ALL_BUILD
+cmake --build . --config Release --target INSTALL
