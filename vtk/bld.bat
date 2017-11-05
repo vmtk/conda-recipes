@@ -1,12 +1,12 @@
-mkdir build
-cd build
+mkdir wk
+cd wk
 
 set BUILD_CONFIG=Release
 
 :: tell cmake where Python is
 set PYTHON_LIBRARY=%PREFIX%\libs\python%PY_VER:~0,1%%PY_VER:~2,1%.lib
 
-cmake .. -G "NMake Makefiles" ^
+cmake .. -G "Ninja" ^
     -Wno-dev ^
     -DCMAKE_BUILD_TYPE=%BUILD_CONFIG% ^
     -DCMAKE_INSTALL_PREFIX:PATH=%LIBRARY_PREFIX% ^
@@ -33,5 +33,5 @@ cmake .. -G "NMake Makefiles" ^
     -DVTK_USE_SYSTEM_EXPAT:BOOL=OFF
 if errorlevel 1 exit 1
 
-cmake --build . --target INSTALL --config Release
+ninja install
 if errorlevel 1 exit 1

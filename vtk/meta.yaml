@@ -10,7 +10,6 @@ build:
   number: 0
   features:
     - vc9   # [win and py27]
-    - vc10  # [win and py34]
     - vc14  # [win and (py35 or py36)]
 
 requirements:
@@ -18,9 +17,13 @@ requirements:
     - python
     - cmake >=3.6
     - git
+    - future
+    - ninja
+    - setuptools
 
   run:
     - python
+    - future
 
 test:
   imports:

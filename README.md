@@ -22,6 +22,11 @@ docker run -i -v /home/rick/projects/vmtk/conda-recipes/:/work/conda-recipes -t 
 
 The mounted volume will appear as a folder in the home directory. Any changes make on the host files will be reflected in the container files while the container is running. Build the conda package and upload to anaconda cloud as usual. Remember that you must upload the conda packages before exiting the container, as operations performed outside a volume are ephemeral between runs. 
 
+## Windows Requirements 
+
+Building on windows (for python versions 3.5+) requires Visual Studios 2015 (VS version 14 / cl.exe version 19). Aquire the following programs and install into the default path:
+- VS 2015 Community or Professional https://www.visualstudio.com/vs/older-downloads/ . Be sure to install the native build tools as per [this tutorial](https://blogs.msdn.microsoft.com/vcblog/2015/07/24/setup-changes-in-visual-studio-2015-affecting-c-developers/)
+
 ## Build Instructions
 
 _**SETUP**_
