@@ -1,8 +1,8 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-mkdir build
-cd build
+mkdir wk
+cd wk
 
 if "%PY_VER%" == "3.4" (
     set GENERATOR=Visual Studio 10 2010
@@ -21,6 +21,7 @@ if "%PY_VER%" == "3.4" (
 if %ARCH% EQU 64 (
     set GENERATOR=%GENERATOR% Win64
 )
+set BACKEND=OpenGL
 
 cmake -LAH .. -G"%GENERATOR%" ^
 -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^

@@ -18,21 +18,23 @@
 ## VMTK via the Continuum Analytics Anaconda Python distribution.
 ## See https://www.continuum.io/ for distribution info
 
-mkdir build
-cd build
+mkdir wk
+cd wk
 
-set BUILD_CONFIG=Release
+set BUILD_CONFIG="RELEASE"
 
-:: tell cmake where Python is
-set PYTHON_LIBRARY=%PREFIX%\libs\python%PY_VER:~0,1%%PY_VER:~2,1%.lib
-
-cmake .. -G "NMake Makefiles" ^
-    -Wno-dev ^
-    -DCMAKE_BUILD_TYPE:STRING=%BUILD_CONFIG% ^
+cmake -LAH .. -G "Ninja" ^
+	-DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
+	-DCMAKE_BUILD_TYPE=Release ^
+	-DVMTK_INSTALL_BIN_DIR=%LIBRARY_BIN% ^
+	-DVMTK_INSTALL_INC_DIR=%LIBRARY_INC% ^
+	-DVMTK_INSTALL_LIB_DIR=%LIBRARY_LIB% ^
     -DUSE_SYSTEM_VTK:BOOL=ON ^
     -DUSE_SYSTEM_ITK:BOOL=ON ^
-    -DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX}
+	-DPYTHON_EXECUTABLE=%PYTHON% ^
+	-DVMTK_USE_SUPERBUILD:BOOL=ON ^
+	-DSUPERBUILD_INSTALL_PREFIX=%PREFIX%
 if errorlevel 1 exit 1
 
-cmake --build .
+ninja install
 if errorlevel 1 exit 1
