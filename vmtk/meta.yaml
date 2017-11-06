@@ -28,13 +28,17 @@ source:
 channels:
   - vmtk
 
+build:
+  skip_compile_pyc:
+    - "*.py"
+
 requirements:
   build:
     - python
-    - future              [py27]
+    - future
     - cmake
     - git
-    - vtk >=7.1
+    - vtk 
     - itk
 
   run:

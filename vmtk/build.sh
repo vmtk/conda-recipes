@@ -25,19 +25,19 @@ cd ./vmtk-build
 
 BUILD_CONFIG=Release
 if [ `uname` = "Darwin" ]; then
+  DYNAMIC_EXT="dylib"
     cmake ../ \
         -Wno-dev \
         -DCMAKE_BUILD_TYPE:STRING=$BUILD_CONFIG \
-        -DCMAKE_PREFIX_PATH:PATH="${PREFIX}" \
-        -DCMAKE_INSTALL_PREFIX:PATH="${PREFIX}" \
-        -DCMAKE_INSTALL_RPATH:PATH="${PREFIX}/lib" \
+        -DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX} \
+        -DPYTHON_EXECUTABLE=${PYTHON} \
         -DUSE_SYSTEM_VTK:BOOL=ON \
         -DUSE_SYSTEM_ITK:BOOL=ON \
         -DVTK_VMTK_USE_COCOA:BOOL=ON \
         -DVMTK_RENDERING_BACKEND:STRING=OpenGL2 \
         -DVMTK_BREW_PYTHON:BOOL=OFF \
         -DVMTK_USE_RENDERING:BOOL=ON \
-        -DVMTK_USE_SUPERBUILD:BOOL=OFF
+        -DVMTK_USE_SUPERBUILD:BOOL=ON
 
     make -j${CPU_COUNT}
     make install
