@@ -42,7 +42,7 @@ requirements:
     - git
     - vtk
     - itk
-    - ninja
+    - ninja # [win]
 
   run:
     - python
