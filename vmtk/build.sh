@@ -7,7 +7,6 @@
 
 ##   Copyright (c) Richard Izzo, Luca Antiga, David Steinman. All rights reserved.
 ##   See LICENCE file for details.
-
 ##      This software is distributed WITHOUT ANY WARRANTY; without even
 ##      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 ##      PURPOSE.  See the above copyright notices for more information.
@@ -23,24 +22,21 @@
 mkdir vmtk-build
 cd ./vmtk-build
 
-BUILD_CONFIG=Release
+BUILD_CONFIG="Release"
 if [ `uname` = "Darwin" ]; then
-  DYNAMIC_EXT="dylib"
-    cmake ../ \
-        -Wno-dev \
-        -DCMAKE_BUILD_TYPE:STRING=$BUILD_CONFIG \
-        -DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX} \
-        -DPYTHON_EXECUTABLE=${PYTHON} \
-        -DUSE_SYSTEM_VTK:BOOL=ON \
-        -DUSE_SYSTEM_ITK:BOOL=ON \
-        -DVTK_VMTK_USE_COCOA:BOOL=ON \
-        -DVMTK_RENDERING_BACKEND:STRING=OpenGL2 \
-        -DVMTK_BREW_PYTHON:BOOL=OFF \
-        -DVMTK_USE_RENDERING:BOOL=ON \
-        -DVMTK_USE_SUPERBUILD:BOOL=ON
+    cmake \
+    -Wno-dev \
+	-DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX} \
+    -DCMAKE_BUILD_TYPE:STRING=$BUILD_CONFIG \
+    -DVTK_VMTK_USE_COCOA:BOOL=ON \
+    -DVMTK_RENDERING_BACKEND:STRING=OpenGL2 \
+    -DUSE_SYSTEM_VTK:BOOL=ON \
+    -DUSE_SYSTEM_ITK:BOOL=ON \
+    -DVMTK_BREW_PYTHON:BOOL=OFF \
+    -DVMTK_USE_SUPERBUILD:BOOL=ON \
+    ../
 
     make -j${CPU_COUNT}
-    make install
 fi
 
 if [ `uname` = "Linux" ]; then

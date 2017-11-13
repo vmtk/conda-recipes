@@ -29,9 +29,6 @@ channels:
   - vmtk
 
 build:
-  skip_compile_pyc:
-    - "*.py"
-
   number: 0
   features:
     - vc9   # [win and py27]
@@ -42,14 +39,16 @@ requirements:
     - python
     - future
     - cmake
-    - git
-    - vtk 
+    - vtk
     - itk
+    - git
+    - numpy
+    - h5py
     - ninja # [win]
 
   run:
     - python
-    - future
+    - future 
     - vtk
     - itk
     - numpy
