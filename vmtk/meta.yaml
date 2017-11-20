@@ -23,7 +23,7 @@ package:
   version: "1.4"
 
 source:
-  git_url: https://github.com/rlizzo/vmtk.git
+  git_url: https://github.com/vmtk/vmtk.git
 
 channels:
   - vmtk
