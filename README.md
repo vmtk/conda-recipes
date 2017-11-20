@@ -67,7 +67,7 @@ Since VTK depends on the python version for correct wrapping, VTK needs to be bu
 8)  run `conda build --python foo.bar (ie. 2.7, 3.3, etc) ./`
 - this will clone the VTK source, checkout version 7.1, create a temporary python environment with the requested version interpreter / default packages, build the binaries, and create a tarball in the macOS folder equivalent of `/anaconda3/conda-bld/linux-64/`.
 - REPEAT THIS COMMAND 5 times, specifying `--python 2.7`, `--python 3.3`, `--python 3.4`, `--python 3.5`, and `--python 3.6` once in each of the build commands. 
-
+- NOTE FOR MACOS: Please specify the full python version for python 3. Compatible version are 3.5.1 and 3.6.0
 **_BUILDING VMTK_**
 
 The paradigm is the same as for building VTK. since we are building for 5 different python versions, this needs to be run 5 seperate times interchanging the parameter `--python foo.bar` with `2.7, 3.3, 3.4, 3.5, & 3.6` in each. NOTE: Before building VMTK with the requested python version, VTK must have been previously built with that same python version. 

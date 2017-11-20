@@ -22,6 +22,17 @@
 mkdir vmtk-build
 cd ./vmtk-build
 
+if [ "$(uname -s)" == "Darwin" ]; then
+  DYNAMIC_EXT="dylib"
+fi
+
+if [[ $PY3K -eq 1 || $PY3K == "True" ]]; then
+  export PY_STR="${PY_VER}m"
+else
+  export PY_STR="${PY_VER}"
+fi
+
+
 BUILD_CONFIG="Release"
 if [ `uname` = "Darwin" ]; then
     cmake \
@@ -32,11 +43,16 @@ if [ `uname` = "Darwin" ]; then
     -DVMTK_RENDERING_BACKEND:STRING=OpenGL2 \
     -DUSE_SYSTEM_VTK:BOOL=ON \
     -DUSE_SYSTEM_ITK:BOOL=ON \
+    -DPYTHON_EXECUTABLE="$PYTHON" \
+    -DCMAKE_INSTALL_PREFIX="$PREFIX" \
+    -DVMTK_MODULE_INSTALL_LIB_DIR="$PREFIX"/vmtk \
+    -DINSTALL_PKGCONFIG_DIR="$PREFIX"/lib/pkgconfig \
     -DVMTK_BREW_PYTHON:BOOL=OFF \
     -DVMTK_USE_SUPERBUILD:BOOL=ON \
     ../
 
     make -j${CPU_COUNT}
+    make install
 fi
 
 if [ `uname` = "Linux" ]; then
