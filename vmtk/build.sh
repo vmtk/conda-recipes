@@ -38,7 +38,7 @@ if [ `uname` = "Darwin" ]; then
     cmake \
     -Wno-dev \
 	-DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX} \
-    -DCMAKE_BUILD_TYPE:STRING=$BUILD_CONFIG \
+    -DCMAKE_BUILD_TYPE:STRING="Release" \
     -DVTK_VMTK_USE_COCOA:BOOL=ON \
     -DVMTK_RENDERING_BACKEND:STRING=OpenGL2 \
     -DUSE_SYSTEM_VTK:BOOL=ON \
@@ -58,7 +58,7 @@ fi
 if [ `uname` = "Linux" ]; then
     cmake ../ \
         -Wno-dev \
-        -DCMAKE_BUILD_TYPE:STRING=$BUILD_CONFIG \
+        -DCMAKE_BUILD_TYPE:STRING="Release" \
         -DUSE_SYSTEM_VTK:BOOL=ON \
         -DUSE_SYSTEM_ITK:BOOL=ON \
         -DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX}

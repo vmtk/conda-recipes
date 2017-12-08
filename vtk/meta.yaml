@@ -9,8 +9,6 @@ source:
 
 build:
   number: 0
-  script_env:
-    - BACKEND 
   features:
     - vc9   # [win and py27]
     - vc14  # [win and (py35 or py36)]
@@ -19,21 +17,20 @@ requirements:
   build:
     - python
     - future
-    - hdf5
+    - ninja
     - cmake >=3.6 # [win]
     - git         # [win]
     - future      # [win]
-    - ninja       # [win]
     - setuptools  # [win]
 
   run:
     - python
-    - hdf5
     - future 
 
 test:
   requires:
     - python
+    - future
     - numpy
     - pillow
   imports:

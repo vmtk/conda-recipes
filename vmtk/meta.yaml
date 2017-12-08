@@ -36,7 +36,7 @@ build:
   
 requirements:
   build:
-    - python ==2.7|3.5.1|3.6.0
+    - python
     - future
     - cmake
     - vtk >=7.0
@@ -47,7 +47,7 @@ requirements:
     - ninja # [win]
 
   run:
-    - python ==2.7|3.5.1|3.6.0
+    - python 
     - future 
     - vtk >=7.0
     - itk >=4.10

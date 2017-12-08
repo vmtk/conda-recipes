@@ -1,26 +1,23 @@
 #!/bin/bash
 mkdir build
-cd build || exit -1
+cd build 
 
 export BACKEND=OpenGL2
 
-# for Linux
-# export CPPFLAGS="$CPPFLAGS"
-# export CXXFLAGS="-stdlib=libc++ $CXXFLAGS"
-# export LDFLAGS="-l GL -L${PREFIX}/lib $LDFLAGS"
-
-# for Mac
-#export CPPFLAGS="-I/opt/X11/include $CPPFLAGS"
-#export CXXFLAGS="-stdlib=libc++ -I/opt/X11/include $CXXFLAGS"
-#export LDFLAGS="-l gl -L/opt/X11/lib -L${PREFIX}/lib $LDFLAGS"
-
-
 if [ "$(uname -s)" == "Linux" ]; then
   DYNAMIC_EXT="so"
+  SCREEN_ARGS=(
+      "-DVTK_USE_X=ON"
+  )
 fi
 
 if [ "$(uname -s)" == "Darwin" ]; then
-  DYNAMIC_EXT="dylib"
+  DYNAMIC_EXT="dylib" 
+  SCREEN_ARGS=(
+      "-DVTK_USE_X:BOOL=OFF"
+      "-DVTK_USE_COCOA:BOOL=ON"
+      "-DVTK_USE_CARBON:BOOL=OFF"
+  )
 fi
 
 if [[ $PY3K -eq 1 || $PY3K == "True" ]]; then
@@ -29,7 +26,7 @@ else
   export PY_STR="${PY_VER}"
 fi
 
-cmake -LAH .. \
+cmake -LAH -G "Ninja" .. \
 -DBUILD_DOCUMENTATION=0 \
 -DBUILD_EXAMPLES=0 \
 -DBUILD_SHARED_LIBS=1 \
@@ -44,8 +41,10 @@ cmake -LAH .. \
 -DPYTHON_LIBRARY="$PREFIX/lib/libpython$PY_STR.$DYNAMIC_EXT" \
 -DVTK_INSTALL_PYTHON_MODULE_DIR="$SP_DIR" \
 -DVTK_PYTHON_VERSION="$PY_VER" \
--DVTK_RENDERING_BACKEND="$BACKEND" \
--DVTK_USE_X=0 \
--DVTK_WRAP_PYTHON=1
+-DVTK_RENDERING_BACKEND=OpenGL2 \
+-DModule_vtkRenderingMatplotlib=ON \
+-DModule_vtkPythonInterpreter:BOOL=OFF \
+-DVTK_WRAP_PYTHON=1 \
+${SCREEN_ARGS[@]}
 
-make -j"$CPU_COUNT" && make install
+ninja install
