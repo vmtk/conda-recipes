@@ -23,34 +23,34 @@ package:
   version: "1.4"
 
 source:
-  git_url: https://github.com/vmtk/vmtk.git
+  path: /Users/rick/projects/vmtk/vmtk
+  # git_url: https://github.com/vmtk/vmtk.git
 
 channels:
   - vmtk
 
 build:
   number: 0
-  features:
-    - vc9   # [win and py27]
-    - vc14  # [win and (py35 or py36)]
   
 requirements:
   build:
-    - python
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - python {{ python }}
     - future
-    - cmake
-    - vtk >=7.0
-    - itk >=4.10
+    - cmake >=3.6
+    - vtk {{ vtk }}
+    - itk {{ itk }}
     - git
     - numpy
     - h5py
-    - ninja # [win]
+    - ninja 
 
   run:
-    - python 
+    - python {{ python }}
     - future 
-    - vtk >=7.0
-    - itk >=4.10
+    - vtk {{ vtk }}
+    - itk {{ itk }}
     - numpy
     - h5py
 

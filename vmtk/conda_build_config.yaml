@@ -1,0 +1,23 @@
+python:
+  - 2.7
+  - 3.5
+  - 3.6
+
+vtk:
+  - 8.0
+
+itk:
+  - 4.12
+
+c_compiler:
+  - vs2008           # [win]
+  - vs2015           # [win]
+
+cxx_compiler:
+  - vs2008           # [win]
+  - vs2015           # [win]
+
+pin_run_as_build:
+  python: x.x
+  vtk: x.x
+  itk: x.x

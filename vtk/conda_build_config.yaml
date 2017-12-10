@@ -1,0 +1,19 @@
+python:
+  - 2.7
+  - 3.5
+  - 3.6
+
+c_compiler:
+  - vs2008           # [win]
+  - vs2015           # [win]
+
+cxx_compiler:
+  - vs2008           # [win]
+  - vs2015           # [win]
+
+pin_run_as_build:
+  python: x.x
+
+CONDA_BUILD_SYSROOT:
+  - /opt/MacOSX10.9.sdk   # [osx]
+

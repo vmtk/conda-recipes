@@ -1,6 +1,6 @@
 package:
   name: itk
-  version: 4.12.1
+  version: "4.12.1"
 
 source:
   git_rev: v4.12.1
@@ -8,14 +8,14 @@ source:
 
 build:
   number: 0
-  features:
-    - vc14  # [win]
 
 requirements:
   build:
-    - cmake >=3.6
+    - {{ compiler('c') }}   
+    - {{ compiler('cxx') }} 
+    - cmake 
     - git
-    - ninja  # [win]
+    - ninja 
 
 about:
   home: https://itk.org/

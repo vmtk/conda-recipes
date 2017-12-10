@@ -22,10 +22,6 @@
 mkdir vmtk-build
 cd ./vmtk-build
 
-if [ "$(uname -s)" == "Darwin" ]; then
-  DYNAMIC_EXT="dylib"
-fi
-
 if [[ $PY3K -eq 1 || $PY3K == "True" ]]; then
   export PY_STR="${PY_VER}m"
 else
@@ -35,9 +31,11 @@ fi
 
 BUILD_CONFIG="Release"
 if [ `uname` = "Darwin" ]; then
-    cmake \
+    cmake .. -G "Ninja" \
     -Wno-dev \
-	-DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX} \
+    -DCMAKE_OSX_DEPLOYMENT_TARGET="10.9" \
+    -DCMAKE_OSX_SYSROOT="/opt/MacOSX10.9.sdk" \
+    -DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX} \
     -DCMAKE_BUILD_TYPE:STRING="Release" \
     -DVTK_VMTK_USE_COCOA:BOOL=ON \
     -DVMTK_RENDERING_BACKEND:STRING=OpenGL2 \
@@ -48,20 +46,19 @@ if [ `uname` = "Darwin" ]; then
     -DVMTK_MODULE_INSTALL_LIB_DIR="$PREFIX"/vmtk \
     -DINSTALL_PKGCONFIG_DIR="$PREFIX"/lib/pkgconfig \
     -DVMTK_BREW_PYTHON:BOOL=OFF \
-    -DVMTK_USE_SUPERBUILD:BOOL=ON \
-    ../
+    -DVMTK_USE_SUPERBUILD:BOOL=OFF
 
-    make -j${CPU_COUNT}
-    make install
+    ninja install
 fi
 
 if [ `uname` = "Linux" ]; then
-    cmake ../ \
+    cmake -G "Ninja" \
         -Wno-dev \
         -DCMAKE_BUILD_TYPE:STRING="Release" \
         -DUSE_SYSTEM_VTK:BOOL=ON \
         -DUSE_SYSTEM_ITK:BOOL=ON \
         -DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX}
+        ..
 
-    make -j${CPU_COUNT}
+    ninja
 fi
