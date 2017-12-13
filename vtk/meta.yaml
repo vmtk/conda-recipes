@@ -35,6 +35,7 @@ test:
     - python {{ python }}
     - numpy
     - pillow
+    - future
   imports:
     - vtk
 

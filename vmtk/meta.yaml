@@ -18,9 +18,14 @@
 ## VMTK via the Continuum Analytics Anaconda Python distribution.
 ## See https://www.continuum.io/ for distribution info
 
+
+# Jinja variables help maintain the recipe as you'll update the version only here.
+{% set name = "vmtk" %}
+{% set version = "1.4" %}
+
 package:
-  name: vmtk
-  version: "1.4"
+  name: {{ name|lower }}
+  version: {{ version }}
 
 source:
   path: /Users/rick/projects/vmtk/vmtk
@@ -38,7 +43,7 @@ requirements:
     - {{ compiler('cxx') }}
     - python {{ python }}
     - future
-    - cmake >=3.6
+    - cmake 
     - vtk {{ vtk }}
     - itk {{ itk }}
     - git
