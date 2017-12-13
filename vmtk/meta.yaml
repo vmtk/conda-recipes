@@ -28,8 +28,7 @@ package:
   version: {{ version }}
 
 source:
-  path: /Users/rick/projects/vmtk/vmtk
-  # git_url: https://github.com/vmtk/vmtk.git
+  git_url: https://github.com/vmtk/vmtk.git
 
 channels:
   - vmtk
