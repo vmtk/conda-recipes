@@ -30,9 +30,6 @@ package:
 source:
   git_url: https://github.com/vmtk/vmtk.git
 
-channels:
-  - vmtk
-
 build:
   number: 0
   
@@ -57,6 +54,10 @@ requirements:
     - itk {{ itk }}
     - numpy
     - h5py
+
+test:
+  imports:
+    - vmtk.vmtkscripts
 
 about:
   home: www.vmtk.org
