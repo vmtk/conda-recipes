@@ -8,7 +8,7 @@ source:
   sha1: 7321f22b08b82d9871eca98ad072edbaad55da50
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -18,9 +18,11 @@ requirements:
     - pkgconfig             # [unix]
     - ninja
     - cmake >=3.6 
-    - git                   # [win]
-    - future      
-    - setuptools            # [win]
+    - git
+    - setuptools           
+  host:
+    - future
+    - python {{ python }}
     - hdf5 
 
   run:

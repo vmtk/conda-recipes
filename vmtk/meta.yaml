@@ -31,21 +31,23 @@ source:
   git_url: https://github.com/vmtk/vmtk.git
 
 build:
-  number: 0
+  number: 1
   
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - pkgconfig             # [unix]
+    - cmake 
+    - git
+    - ninja
+  host:
     - python {{ python }}
     - future
-    - cmake 
     - vtk {{ vtk }}
     - itk {{ itk }}
-    - git
     - numpy
     - h5py
-    - ninja 
 
   run:
     - python {{ python }}
