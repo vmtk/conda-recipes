@@ -19,8 +19,8 @@
 ## VMTK via the Continuum Analytics Anaconda Python distribution.
 ## See https://www.continuum.io/ for distribution info
 
-mkdir vmtk-build
-cd ./vmtk-build
+mkdir build
+cd ./build
 
 if [[ $PY3K -eq 1 || $PY3K == "True" ]]; then
   export PY_STR="${PY_VER}m"
@@ -37,7 +37,7 @@ if [ `uname` = "Darwin" ]; then
     -DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX} \
     -DCMAKE_BUILD_TYPE:STRING="Release" \
     -DVTK_VMTK_USE_COCOA:BOOL=ON \
-    -DVMTK_RENDERING_BACKEND:STRING=OpenGL2 \
+    -DVMTK_RENDERING_BACKEND:STRING="OpenGL2" \
     -DUSE_SYSTEM_VTK:BOOL=ON \
     -DUSE_SYSTEM_ITK:BOOL=ON \
     -DPYTHON_EXECUTABLE="$PYTHON" \
@@ -55,13 +55,22 @@ if [ `uname` = "Darwin" ]; then
 fi
 
 if [ `uname` = "Linux" ]; then
-    cmake -LAH -G "Ninja" \
-        -Wno-dev \
-        -DCMAKE_BUILD_TYPE:STRING="Release" \
-        -DUSE_SYSTEM_VTK:BOOL=ON \
-        -DUSE_SYSTEM_ITK:BOOL=ON \
-        -DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX}
-        ..
+    cmake .. -LAH -G "Ninja" \
+    -Wno-dev \
+    -DCMAKE_BUILD_TYPE:STRING="Release" \
+    -DUSE_SYSTEM_VTK:BOOL=ON \
+    -DUSE_SYSTEM_ITK:BOOL=ON \
+    -DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX} \
+    -DPYTHON_EXECUTABLE:STRING=${PYTHON} \
+    -DCMAKE_INSTALL_PREFIX:STRING=${PREFIX} \
+    -DVMTK_MODULE_INSTALL_LIB_DIR:STRING="${PREFIX}/vmtk" \
+    -DINSTALL_PKGCONFIG_DIR:STRING="${PREFIX}/lib/pkgconfig" \
+    -DGIT_PROTOCOL_HTTPS:BOOL=ON \
+    -DVMTK_USE_RENDERING:BOOL=ON \
+    -DVTK_VMTK_CONTRIB:BOOL=ON \
+    -DVMTK_CONTRIB_SCRIPTS:BOOL=ON \
+    -DVMTK_USE_SUPERBUILD:BOOL=OFF \
+    -DVMTK_PYTHON_VERSION:STRING="python${PY_VER}"
 
-    ninja
+    ninja install 
 fi

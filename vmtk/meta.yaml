@@ -35,12 +35,12 @@ build:
   
 requirements:
   build:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-    - pkgconfig             # [unix]
+    - {{ compiler('c') }}    # [osx]
+    - {{ compiler('cxx') }}  # [osx]
+    - pkgconfig              # [unix]
     - cmake 
     - git
-    - ninja
+    - ninja                 
   host:
     - python {{ python }}
     - future
