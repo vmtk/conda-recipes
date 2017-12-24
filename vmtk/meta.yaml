@@ -28,7 +28,7 @@ package:
   version: {{ version }}
 
 source:
-  path: C:\\Users\\rlizzo\\projects\\vmtk\\vmtk
+  path: C:\\Users\\rick\\vmtk\\vmtk
   #git_url: https://github.com/vmtk/vmtk.git
 
 build:
@@ -47,7 +47,8 @@ requirements:
     - cmake 
     - git
     - ninja
-    - setuptools             # [win]    
+    - setuptools             # [win] 
+    - menuinst               # [win]    
   host:
     - python {{ python }}
     - future
@@ -56,6 +57,7 @@ requirements:
     - numpy
     - h5py
     - setuptools              # [win]
+    - menuinst                # [win]
 
   run:
     - python {{ python }}

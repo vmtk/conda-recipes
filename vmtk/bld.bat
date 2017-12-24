@@ -48,15 +48,23 @@ cmake .. -LAH -G "Ninja" ^
 	-DPYPES_INSTALL_BIN_DIR:FILEPATH="%LIBRARY_BIN%" ^
     -DVTK_VMTK_CONTRIB:BOOL=ON ^
     -DVMTK_CONTRIB_SCRIPTS:BOOL=ON ^
+    -DVMTK_USE_RENDERING:BOOL=ON ^
     -DVMTK_USE_SUPERBUILD:BOOL=OFF
 if errorlevel 1 exit 1
 
 ninja install
 if errorlevel 1 exit 1
 
+:: Hack to move to vtkvmtk.py script to the correct location
 set MOVE_FROM=%LIBRARY_LIB%\python%PY_VER:~0,1%.%PY_VER:~2,1%\site-packages\vmtk\vtkvmtk.py
 
 move %MOVE_FROM% %PREFIX%\Lib\site-packages\vmtk\vtkvmtk.py
 if errorlevel 1 exit 1
 rmdir /s /q %LIBRARY_LIB%\python%PY_VER:~0,1%.%PY_VER:~2,1%
+if errorlevel 1 exit 1
+
+:: Put the menu in it's correct place. 
+if not exist "%PREFIX%\Menu" mkdir "%PREFIX%\Menu"
+copy "%RECIPE_DIR%\menu-windows.json" "%PREFIX%\Menu"
+copy "%RECIPE_DIR%\vmtk-icon.ico" "%PREFIX%\Menu"
 if errorlevel 1 exit 1
