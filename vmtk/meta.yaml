@@ -28,7 +28,7 @@ package:
   version: {{ version }}
 
 source:
-  path: C:\Users\rlizzo\projects\vmtk\vmtk
+  path: C:\\Users\\rlizzo\\projects\\vmtk\\vmtk
   #git_url: https://github.com/vmtk/vmtk.git
 
 build:
