@@ -8,6 +8,20 @@ Please refer to https://vmtk.org for details
 
 The source code is available at https://github.com/vmtk/vmtk
 
+## Conda Build Varients 
+
+This package uses the conda build varients as documented in https://conda.io/docs/user-guide/tasks/build-packages/variants.html. Each subdirectory contains the standard meta.yaml, build.sh, & build.bat files, along with a conda_build_config.yaml file. The conda_build_config.yaml file contains the specifications for which python/vtk/itk/compilers to use for each respective subdirectory. 
+
+When `conda build .` is called within a subdirectory, each varient of the recipe is rendered. This behavior can be observed in a dry run by calling `conda render .`. Once the package specifications are rendered, conda will compile each varient in the package as normal. 
+
+## Anaconda Compilers
+
+With conda build 3.0+, we have transitioned to using the anaconda compiler packages for MacOS and Windows. This ensures that package builds are standardized across every machine. 
+
+#### MacOS Builds
+
+The MacOSX-10.9sdk is required to build packages on MacOS. The sdk can be downloaded from the following repository: https://github.com/phracker/MacOSX-SDKs. Licensing terms prevent us from including the SDK in this repo. As is standard practice, we have chosen the default location for the SDK to reside at `/opt/MacOSX10.9.sdk`. If you wish to install this elsewhere, update the locatino in the conda_build_config.yaml files befire trying to compile. 
+
 ## Docker Container
 
 A docker container has been created containing all the dependencies needed for building the vmtk packages on a linux system. 
@@ -62,22 +76,19 @@ As ITK does not depend on python in any way, we only need to build it once. The 
 
 7) cd into the `foo/conda-recipes/vtk/` directory
 
-Since VTK depends on the python version for correct wrapping, VTK needs to be build 5 seperate times, once specifying each python version we are building VMTK for: `python 2.7, 3.3, 3.4, 3.5, & 3.6`
+Since VTK depends on the python version for correct wrapping, VTK will be built 3 seperate times, once specifying each python version we are building VMTK for: `python 2.7, 3.5, & 3.6`. this is handled automatically by the conda build varients tool. 
 
-8)  run `conda build --python foo.bar (ie. 2.7, 3.3, etc) ./`
-- this will clone the VTK source, checkout version 7.1, create a temporary python environment with the requested version interpreter / default packages, build the binaries, and create a tarball in the macOS folder equivalent of `/anaconda3/conda-bld/linux-64/`.
-- REPEAT THIS COMMAND 5 times, specifying `--python 2.7`, `--python 3.3`, `--python 3.4`, `--python 3.5`, and `--python 3.6` once in each of the build commands. 
-- NOTE FOR MACOS: Please specify the full python version for python 3. Compatible version are 3.5.1 and 3.6.0
+8)  run `conda build .`
+- this will clone the VTK source, checkout the desired version, create a temporary python environment with the requested version interpreter / default packages, build the binaries, and create a tarball in the macOS folder equivalent of `/anaconda3/conda-bld/linux-64/`.
 
 **_BUILDING VMTK_**
 
-The paradigm is the same as for building VTK. since we are building for 5 different python versions, this needs to be run 5 seperate times interchanging the parameter `--python foo.bar` with `2.7, 3.3, 3.4, 3.5, & 3.6` in each. NOTE: Before building VMTK with the requested python version, VTK must have been previously built with that same python version. 
+The paradigm is the same as for building VTK. We will build VMTK built 3 seperate times, once specifying each python version we are building VMTK for: `python 2.7, 3.5, & 3.6`. this is handled automatically by the conda build varients tool.  NOTE: Before building VMTK with the requested python version, VTK must have been previously built with that same python version. 
 
 9) cd into `foo/conda-recipes/vmtk/`. 
 
-10)  run `conda build --python foo.bar (ie. 2.7, 3.3, etc) ./`
+10)  run `conda build .`
 - this will clone the VMTK source, checkout the master branch, create a temporary python environment with the requested version interpreter / default packages (and in the case of python 2.7, the `future` module indicated in the meta.yaml file), build the binaries, and create a tarball in the macOS folder equivalent of `/anaconda3/conda-bld/linux-64/`.
-- REPEAT THIS COMMAND 5 times, specifying `--python 2.7`, `--python 3.3`, `--python 3.4`, `--python 3.5`, and `--python 3.6` once in each of the build commands. 
 
 **_TESTING VMTK CONDA PACKAGE_**
 
