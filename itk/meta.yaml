@@ -1,9 +1,9 @@
 package:
   name: itk
-  version: "4.12.1"
+  version: "{{ itk }}"
 
 source:
-  git_rev: v4.12.1
+  git_rev: v{{ itk }}
   git_url: https://github.com/Kitware/ITK.git
 
 build:
@@ -18,6 +18,12 @@ requirements:
     - cmake 
     - git
     - ninja 
+
+test:
+  requires:
+    - python
+  imports:
+    - os
 
 about:
   home: https://itk.org/

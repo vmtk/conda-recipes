@@ -1,3 +1,7 @@
+itk:
+  - 4.12.1
+  - 4.13.0
+
 CONDA_BUILD_SYSROOT:
   - /opt/MacOSX10.9.sdk   # [osx]
 
