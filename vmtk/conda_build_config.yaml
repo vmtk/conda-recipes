@@ -4,10 +4,9 @@ python:
   - 3.6.1
 
 vtk:
-  - 8.0.1
+  - 8.1.0
 
 itk:
-  - 4.12.1
   - 4.13.0
 
 pin_run_as_build:
