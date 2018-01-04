@@ -74,7 +74,7 @@ if [ `uname` = "Linux" ]; then
     -DVMTK_USE_SUPERBUILD:BOOL=OFF \
     -DVMTK_PYTHON_VERSION:STRING="python${PY_VER}" \
     -DITK_LEGACY_SILENT:BOOL=ON \
-    -DVTK_LEGACY_SILENT:BOOL=ON \
+    -DVTK_LEGACY_SILENT:BOOL=ON 
 
     ninja install 
 fi
