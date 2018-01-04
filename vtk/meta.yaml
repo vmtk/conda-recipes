@@ -4,7 +4,7 @@ package:
 
 source:
   fn: VTK-{{ vtk }}.tar.gz
-  url: http://www.vtk.org/files/release/8.1/VTK-{{ vtk }}.tar.gz
+  url: http://www.vtk.org/files/release/8.0/VTK-{{ vtk }}.tar.gz
 
 build:
   number: 1
@@ -29,17 +29,13 @@ requirements:
   host:
     - future
     - python {{ python }}
-    - hdf5 1.8.18|1.8.18.*  # [unix]
-    - zlib 1.2.*
     - setuptools            # [win]
 
   run:
     - python  {{ python }}
     - future 
-    - hdf5 1.8.18|1.8.18.*  # [unix]
     - numpy
     - pillow
-    - zlib 1.2.*
     
 test:
   requires:
