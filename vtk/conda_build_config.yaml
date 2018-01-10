@@ -2,19 +2,19 @@ vtk:
   - 8.0.1
 
 python:
-  - 3.6
+  - 2.7
   - 3.5
-  - 2.7 
+  - 3.6 
 
 c_compiler:
   - vs2008           # [win]
-  - vs2015           # [win]
-  - vs2015           # [win]
+  - vs2017           # [win]
+  - vs2017           # [win]
 
 cxx_compiler:
   - vs2008           # [win]
-  - vs2015           # [win]
-  - vs2015           # [win]
+  - vs2017           # [win]
+  - vs2017           # [win]
   
 zip_keys:            
   - python           
