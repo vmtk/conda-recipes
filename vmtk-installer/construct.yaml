@@ -1,0 +1,20 @@
+name: VMTK
+version: 1.4
+
+install_in_dependency_order: True
+
+channels:
+  - http://repo.continuum.io/pkgs/free/
+  - http://repo.continuum.io/pkgs/msys2
+  - vmtk
+  
+specs:
+  - python 3.6
+  - numpy
+  - h5py
+  - vmtk
+  
+license_file: LICENSE
+
+# Welcome image for Windows installer
+welcome_image: vmtk-icon                  [win]

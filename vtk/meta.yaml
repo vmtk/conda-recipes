@@ -1,13 +1,14 @@
 package:
   name: vtk
-  version: "{{ vtk }}"
+  version: "8.0.1"
 
 source:
-  fn: VTK-{{ vtk }}.tar.gz
-  url: http://www.vtk.org/files/release/8.0/VTK-{{ vtk }}.tar.gz
+  fn: VTK-8.0.1.tar.gz
+  url: http://www.vtk.org/files/release/8.0/VTK-8.0.1.tar.gz
+  sha1: 7321f22b08b82d9871eca98ad072edbaad55da50
 
 build:
-  number: 3
+  number: 1
   features:
     - vc9   # [win and py27]
     - vc14  # [win and (py35 or py36)]
@@ -29,13 +30,17 @@ requirements:
   host:
     - future
     - python {{ python }}
+    - hdf5 1.8.18|1.8.18.*  # [unix]
+    - zlib 1.2.*
     - setuptools            # [win]
 
   run:
     - python  {{ python }}
     - future 
+    - hdf5 1.8.18|1.8.18.*  # [unix]
     - numpy
     - pillow
+    - zlib 1.2.*
     
 test:
   requires:
