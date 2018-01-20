@@ -1,6 +1,9 @@
 vtk:
   - 8.1.0
 
+vtk_major_minor:
+  - 8.1
+
 python:
   - 2.7
   - 3.5
