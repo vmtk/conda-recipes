@@ -19,12 +19,8 @@
 ## VMTK via the Continuum Analytics Anaconda Python distribution.
 ## See https://www.continuum.io/ for distribution info
 
-mkdir vmtk-build
-cd ./vmtk-build
-
-if [ "$(uname -s)" == "Darwin" ]; then
-  DYNAMIC_EXT="dylib"
-fi
+mkdir build
+cd ./build
 
 if [[ $PY3K -eq 1 || $PY3K == "True" ]]; then
   export PY_STR="${PY_VER}m"
@@ -33,14 +29,17 @@ else
 fi
 
 
-BUILD_CONFIG="Release"
 if [ `uname` = "Darwin" ]; then
-    cmake \
+    cmake .. -LAH -G "Ninja" \
     -Wno-dev \
-	-DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX} \
+    -DCMAKE_OSX_DEPLOYMENT_TARGET="10.9" \
+    -DCMAKE_OSX_SYSROOT="/opt/MacOSX10.9.sdk" \
+    -DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX} \
     -DCMAKE_BUILD_TYPE:STRING="Release" \
+    -DVTK_LEGACY_SILENT:BOOL=ON \
+    -DITK_LEGACY_SILENT:BOOL=ON \
     -DVTK_VMTK_USE_COCOA:BOOL=ON \
-    -DVMTK_RENDERING_BACKEND:STRING=OpenGL2 \
+    -DVMTK_RENDERING_BACKEND:STRING="OpenGL2" \
     -DUSE_SYSTEM_VTK:BOOL=ON \
     -DUSE_SYSTEM_ITK:BOOL=ON \
     -DPYTHON_EXECUTABLE="$PYTHON" \
@@ -48,20 +47,40 @@ if [ `uname` = "Darwin" ]; then
     -DVMTK_MODULE_INSTALL_LIB_DIR="$PREFIX"/vmtk \
     -DINSTALL_PKGCONFIG_DIR="$PREFIX"/lib/pkgconfig \
     -DVMTK_BREW_PYTHON:BOOL=OFF \
-    -DVMTK_USE_SUPERBUILD:BOOL=ON \
-    ../
+    -DVMTK_USE_RENDERING:BOOL=ON \
+    -DVTK_VMTK_CONTRIB:BOOL=ON \
+    -DVMTK_CONTRIB_SCRIPTS:BOOL=ON \
+    -DVMTK_USE_SUPERBUILD:BOOL=OFF \
+    -DVMTK_PYTHON_VERSION:STRING="python${PY_VER}" \
+    -DCMAKE_CXX_STANDARD=14 \
+    -DCMAKE_CXX_STANDARD_REQUIRED=ON \
+    -DCMAKE_CXX_EXTENSIONS=OFF
 
-    make -j${CPU_COUNT}
-    make install
+    ninja install
 fi
 
 if [ `uname` = "Linux" ]; then
-    cmake ../ \
-        -Wno-dev \
-        -DCMAKE_BUILD_TYPE:STRING="Release" \
-        -DUSE_SYSTEM_VTK:BOOL=ON \
-        -DUSE_SYSTEM_ITK:BOOL=ON \
-        -DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX}
+    cmake .. -LAH -G "Ninja" \
+    -Wno-dev \
+    -DCMAKE_BUILD_TYPE:STRING="Release" \
+    -DUSE_SYSTEM_VTK:BOOL=ON \
+    -DUSE_SYSTEM_ITK:BOOL=ON \
+    -DSUPERBUILD_INSTALL_PREFIX:STRING=${PREFIX} \
+    -DPYTHON_EXECUTABLE:STRING=${PYTHON} \
+    -DCMAKE_INSTALL_PREFIX:STRING=${PREFIX} \
+    -DVMTK_MODULE_INSTALL_LIB_DIR:STRING="${PREFIX}/vmtk" \
+    -DINSTALL_PKGCONFIG_DIR:STRING="${PREFIX}/lib/pkgconfig" \
+    -DGIT_PROTOCOL_HTTPS:BOOL=ON \
+    -DVMTK_USE_RENDERING:BOOL=ON \
+    -DVTK_VMTK_CONTRIB:BOOL=ON \
+    -DVMTK_CONTRIB_SCRIPTS:BOOL=ON \
+    -DVMTK_USE_SUPERBUILD:BOOL=OFF \
+    -DVMTK_PYTHON_VERSION:STRING="python${PY_VER}" \
+    -DITK_LEGACY_SILENT:BOOL=ON \
+    -DVTK_LEGACY_SILENT:BOOL=ON \
+    -DCMAKE_CXX_STANDARD=14 \
+    -DCMAKE_CXX_STANDARD_REQUIRED=ON \
+    -DCMAKE_CXX_EXTENSIONS=OFF
 
-    make -j${CPU_COUNT}
+    ninja install 
 fi
