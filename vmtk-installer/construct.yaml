@@ -4,17 +4,18 @@ version: 1.4
 install_in_dependency_order: True
 
 channels:
+  - rlizzo # [win]
   - http://repo.continuum.io/pkgs/free/
-  - http://repo.continuum.io/pkgs/msys2
-  - vmtk
   
 specs:
-  - python 3.6
-  - numpy
-  - h5py
-  - vmtk
-  
+  - conda
+  - python 3.6.1 
+  - vmtk 1.4
+  - vtk 8.0.1
+  - itk 4.12.2
+
 license_file: LICENSE
 
+keep_pkgs: True
 # Welcome image for Windows installer
 welcome_image: vmtk-icon                  [win]
