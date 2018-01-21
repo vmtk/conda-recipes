@@ -40,8 +40,8 @@ build:
   
 requirements:
   build:
-    - {{ compiler('c') }}    # [osx or win]
-    - {{ compiler('cxx') }}  # [osx or win]
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - pkgconfig              # [unix]
     - cmake 
     - git
