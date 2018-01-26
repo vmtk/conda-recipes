@@ -1,40 +1,41 @@
-environment:
-  binstar_token:
-    secure: uR5UssvsPxCrGeI01J852urZ6krq2RhUDMa5Um/B2O5rBCTzVr891bQXOJCMkV0l
+## Program: VMTK
+## Language:  Python
+## Date:      January 30, 2018
+## Version:   1.4
+##
+##   Copyright (c) Richard Izzo, Luca Antiga, All rights reserved.
+##   See LICENCE file for details.
+##
+##      This software is distributed WITHOUT ANY WARRANTY; without even
+##      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+##      PURPOSE.  See the above copyright notices for more information.
+##
+## Note: this code was contributed by
+##       Richard Izzo (Github @rlizzo)
+##       University at Buffalo
 
+# API token for the vmtk anaconda channel
+environment:
   global:
     # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
     # /E:ON and /V:ON options are not enabled in the batch script intepreter
     # See: http://stackoverflow.com/a/13751649/163740
     CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\continuous-integration\\appveyor\\run_with_env.cmd"
 
+    BINSTAR_TOKEN:
+      secure: fVJ4du4JeXvRvrVa/q4n9PODtmA0Q0mNRcnPxAjlYkioS7OD35G2zQLt3IsMJFz+
+
   matrix:
-    - PYTHON: "C:\\Python27_64"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2008
-      PYTHON_VERSION: "2.7"
-      PYTHON_ARCH: "64"
-      CONDA_PY: "27"
-      APP_CONDA_PY: "2.7.14"
-      PACKAGE_TO_BUILD: "itk"
-
     - PYTHON: "C:\\Python36_64"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       PYTHON_VERSION: "3.6"
       PYTHON_ARCH: "64"
       CONDA_PY: "36"
       APP_CONDA_PY: "3.6.1"
       PACKAGE_TO_BUILD: "itk"
 
-    - PYTHON: "C:\\Python27_64"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2008
-      PYTHON_VERSION: "2.7"
-      PYTHON_ARCH: "64"
-      CONDA_PY: "27"
-      APP_CONDA_PY: "2.7.14"
-      PACKAGE_TO_BUILD: "vtk"
-
     - PYTHON: "C:\\Python35_64"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       PYTHON_VERSION: "3.5"
       PYTHON_ARCH: "64"
       CONDA_PY: "35"
@@ -42,22 +43,15 @@ environment:
       PACKAGE_TO_BUILD: "vtk"
 
     - PYTHON: "C:\\Python36_64"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       PYTHON_VERSION: "3.6"
       PYTHON_ARCH: "64"
       CONDA_PY: "36"
       APP_CONDA_PY: "3.6.1"
       PACKAGE_TO_BUILD: "vtk"
 
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2008
-      PYTHON_VERSION: "2.7"
-      PYTHON_ARCH: "64"
-      CONDA_PY: "27"
-      APP_CONDA_PY: "2.7.14"
-      PACKAGE_TO_BUILD: "vmtk"
-
     - PYTHON: "C:\\Python35_64"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       PYTHON_VERSION: "3.5"
       PYTHON_ARCH: "64"
       CONDA_PY: "35"
@@ -65,7 +59,7 @@ environment:
       PACKAGE_TO_BUILD: "vmtk"
 
     - PYTHON: "C:\\Python36_64"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       PYTHON_VERSION: "3.6"
       PYTHON_ARCH: "64"
       CONDA_PY: "36"
@@ -81,35 +75,30 @@ configuration:
 install:
   # this installs the appropriate Miniconda (Py2/Py3, 32/64 bit),
   # as well as pip, conda-build, and the binstar CLI
-  - powershell .\\ontinuous-integration\\appveyor\\install.ps1
+  - powershell .\\continuous-integration\\appveyor\\install.ps1
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
 
+#---------------------------------#
+#    build / test configuration   #
+#---------------------------------#
+
+# because we are handing off the rest of the build process to conda build, 
+# appveyor never realizes that we are actually performing both a build and a test
+# phase. By setting build=false and then just handing off the rest of the execution
+# to the "test_script", appveyor unknowningly builds the package all while watching for
+# the results of the tests to run. 
 build: false
 
 test_script:
-  # Build and test the package. This appears(?) to sporadically fail due to a 
-  # bug in conda-build on 32 bit python.
-  # https://github.com/conda/conda-build/issues/152
-  #
   # Note also that our setup.py script, which is called by conda-build, writes
   # a __conda_version__.txt file, so the version number on the binary package
   # is set dynamically. This unfortunately mean that conda build --output
   # doesn't really work.
-  #
-  - "%CMD_IN_ENV% conda config --add channels rlizzo"
+  #    # Only upload if this is not a pull request
+  - if defined APPVEYOR_PULL_REQUEST_NUMBER (set UPLOAD=false) else (set UPLOAD=true)
+  - echo Upload is %UPLOAD%
+  - "%CMD_IN_ENV% conda config --add channels vmtk"
+  - if defined APPVEYOR_PULL_REQUEST_NUMBER (echo none) else (call "%CMD_IN_ENV% conda config --set anaconda_token %BINSTAR_TOKEN%")
+  - "%CMD_IN_ENV% conda config --set anaconda_upload %UPLOAD%"
   - "%CMD_IN_ENV% conda config --show"
-  - "%CMD_IN_ENV% conda build --python %APP_CONDA_PY% --no-copy-test-source-files %PACKAGE_TO_BUILD%"
-  # Move the conda package into the current directory, to register it
-  # as an "artifact" for Appveyor. cmd.exe does't have good globbing, so
-  # we'll use a simple python script.
-  - python continuous-integration\move-conda-package.py %PACKAGE_TO_BUILD%
-
-artifacts:
-  # Archive the generated conda package in the ci.appveyor.com build report.
-  - path: '*.tar.bz2'
-
-on_success:
-  # Upload built binaries to binstar.org. The globbing and handling of the
-  # exit-status code is tricky in cmd.exe or powershell, so we're just using
-  # a python script.
-  - python continuous-integration\binstar-push.py
+  - "%CMD_IN_ENV% conda build --user vmtk --python %APP_CONDA_PY% --no-copy-test-source-files %PACKAGE_TO_BUILD%"

@@ -25,7 +25,7 @@ cmake .. -G "Ninja" ^
     -DVTK_HAS_FEENABLEEXCEPT:BOOL=OFF ^
     -DVTK_RENDERING_BACKEND=OpenGL2 ^
     -DModule_vtkRenderingMatplotlib=ON ^
-	-DCMAKE_CXX_STANDARD=14 ^
+	-DCMAKE_CXX_STANDARD=11 ^
     -DCMAKE_CXX_STANDARD_REQUIRED=ON ^
     -DCMAKE_CXX_EXTENSIONS=OFF 
 if errorlevel 1 exit 1

@@ -7,7 +7,13 @@ source:
   git_url: https://github.com/Kitware/ITK.git
 
 build:
+  features:
+    - vc14                    # [win and (py35 or py36)]  
   number: 1
+  skip_compile_pyc:
+    - "*/*.py"
+  skip:
+    - True                    # [win and py27]  
 
 requirements:
   build:
@@ -16,12 +22,6 @@ requirements:
     - cmake 
     - git
     - ninja 
-
-test:
-  requires:
-    - python
-  imports:
-    - os
 
 about:
   home: https://itk.org/

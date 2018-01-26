@@ -5,7 +5,8 @@ cd build
 if [ "$(uname -s)" == "Linux" ]; then
   DYNAMIC_EXT="so"
   SCREEN_ARGS=(
-      "-DVTK_USE_X=ON"
+      "-DVTK_USE_X=OFF"
+      "-DVTK_OPENGL_HAS_OSMESA:BOOL=ON"
   )
 fi
 
@@ -26,7 +27,7 @@ fi
 
 cmake -LAH -G "Ninja" .. \
   -DCMAKE_OSX_DEPLOYMENT_TARGET="10.9" \
-  -DCMAKE_OSX_SYSROOT="/opt/MacOSX10.9.sdk" \
+  -DCMAKE_OSX_SYSROOT="$HOME/MacOSX-SDKs/MacOSX10.9.sdk" \
   -DBUILD_DOCUMENTATION=0 \
   -DBUILD_EXAMPLES=0 \
   -DBUILD_SHARED_LIBS=1 \
@@ -48,7 +49,7 @@ cmake -LAH -G "Ninja" .. \
   -DVTK_WRAP_JAVA=0 \
   -DVTK_WRAP_TCL=0 \
   -DVTK_WRAP_PYTHON=1 \
-  -DCMAKE_CXX_STANDARD=14 \
+  -DCMAKE_CXX_STANDARD=11 \
   -DCMAKE_CXX_STANDARD_REQUIRED=ON \
   -DCMAKE_CXX_EXTENSIONS=OFF \
   ${SCREEN_ARGS[@]}

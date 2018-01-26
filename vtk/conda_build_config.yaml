@@ -4,29 +4,19 @@ vtk:
 vtk_major_minor:
   - 8.1
 
+vtk_md5:
+  - "4fa5eadbc8723ba0b8d203f05376d932"
+
 python:
   - 2.7
   - 3.5
   - 3.6 
 
 c_compiler:
-  - vs2008           # [win]
-  - vs2017           # [win]
-  - vs2017           # [win]
+  - vs2015           # [win and (py36 or py35)]
 
 cxx_compiler:
-  - vs2008           # [win]
-  - vs2017           # [win]
-  - vs2017           # [win]
-  
-zip_keys:            
-  - python           
-  - c_compiler       # [win]
-  - cxx_compiler     # [win]
-
-pin_run_as_build:
-  python: x.x
+  - vs2015           # [win and (py36 or py35)]
 
 CONDA_BUILD_SYSROOT:
-  - /opt/MacOSX10.9.sdk   # [osx]
-
+  - $HOME/MacOSX-SDKs/MacOSX10.9.sdk   # [osx]
