@@ -3,7 +3,7 @@
 mkdir build
 cd build
 
-BUILD_CONFIG="Debug"
+BUILD_CONFIG="Release"
 
 cmake .. -G "Ninja"\
     -Wno-dev \
