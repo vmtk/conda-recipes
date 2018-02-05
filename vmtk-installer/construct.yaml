@@ -3,19 +3,35 @@ version: 1.4
 
 install_in_dependency_order: True
 
+# By default, constructor will error out when adding packages with
+# duplicate files in them. Enable this option to warn instead and continue.
+# This is needed for libhdf5 which is included by both itk and vmtk
+ignore_duplicate_files: True
+
 channels:
-  - rlizzo # [win]
+  - https://conda.anaconda.org/vmtk
   - http://repo.continuum.io/pkgs/free/
+  - http://repo.continuum.io/pkgs/msys2
   
 specs:
-  - conda
-  - python 3.6.1 
+  - python 3.6.1
   - vmtk 1.4
-  - vtk 8.0.1
-  - itk 4.12.2
+  - menuinst
 
 license_file: LICENSE
 
+
+# By default, no conda packages are preserved after running the created
+# installer in the pkgs directory. Using this option changes the default
+# behavior.
 keep_pkgs: True
-# Welcome image for Windows installer
-welcome_image: vmtk-icon                  [win]
+
+
+# Path to an image (in any common image format .png, .jpg, .tif, etc.)
+#  which is used as the welcome image for the Windows installer. 
+# The image is re-sized to 164 x 314 pixels. By default, an image
+# is automatically generated.
+welcome_image: vmtk-icon.ico
+
+# Like welcome_image for Windows, re-sized to 256 x 256 pixels.
+icon_image: vmtk-icon.ico
