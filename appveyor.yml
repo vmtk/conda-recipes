@@ -22,33 +22,33 @@ environment:
     # See: http://stackoverflow.com/a/13751649/163740
     CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\continuous-integration\\appveyor\\run_with_env.cmd"
 
-    BINSTAR_TOKEN:
+    ANACONDA_API_TOKEN:
       secure: fVJ4du4JeXvRvrVa/q4n9PODtmA0Q0mNRcnPxAjlYkioS7OD35G2zQLt3IsMJFz+
 
   matrix:
-    - PYTHON: "C:\\Python36_64"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-      PYTHON_VERSION: "3.6"
-      PYTHON_ARCH: "64"
-      CONDA_PY: "36"
-      APP_CONDA_PY: "3.6.1"
-      PACKAGE_TO_BUILD: "itk"
+    # - PYTHON: "C:\\Python36_64"
+    #   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    #   PYTHON_VERSION: "3.6"
+    #   PYTHON_ARCH: "64"
+    #   CONDA_PY: "36"
+    #   APP_CONDA_PY: "3.6.1"
+    #   PACKAGE_TO_BUILD: "itk"
 
-    - PYTHON: "C:\\Python35_64"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-      PYTHON_VERSION: "3.5"
-      PYTHON_ARCH: "64"
-      CONDA_PY: "35"
-      APP_CONDA_PY: "3.5.1"
-      PACKAGE_TO_BUILD: "vtk"
+    # - PYTHON: "C:\\Python35_64"
+    #   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    #   PYTHON_VERSION: "3.5"
+    #   PYTHON_ARCH: "64"
+    #   CONDA_PY: "35"
+    #   APP_CONDA_PY: "3.5.1"
+    #   PACKAGE_TO_BUILD: "vtk"
 
-    - PYTHON: "C:\\Python36_64"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-      PYTHON_VERSION: "3.6"
-      PYTHON_ARCH: "64"
-      CONDA_PY: "36"
-      APP_CONDA_PY: "3.6.1"
-      PACKAGE_TO_BUILD: "vtk"
+    # - PYTHON: "C:\\Python36_64"
+    #   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    #   PYTHON_VERSION: "3.6"
+    #   PYTHON_ARCH: "64"
+    #   CONDA_PY: "36"
+    #   APP_CONDA_PY: "3.6.1"
+    #   PACKAGE_TO_BUILD: "vtk"
 
     - PYTHON: "C:\\Python35_64"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
@@ -95,10 +95,9 @@ test_script:
   # is set dynamically. This unfortunately mean that conda build --output
   # doesn't really work.
   #    # Only upload if this is not a pull request
-  - if defined APPVEYOR_PULL_REQUEST_NUMBER (set UPLOAD=true) else (set UPLOAD=true)
+  - if defined APPVEYOR_PULL_REQUEST_NUMBER (set UPLOAD=false) else (set UPLOAD=true)
   - echo Upload is %UPLOAD%
   - "%CMD_IN_ENV% conda config --add channels vmtk"
-  - if defined APPVEYOR_PULL_REQUEST_NUMBER (call "%CMD_IN_ENV% conda config --set anaconda_token %BINSTAR_TOKEN%") else (call "%CMD_IN_ENV% conda config --set anaconda_token %BINSTAR_TOKEN%")
   - "%CMD_IN_ENV% conda config --set anaconda_upload %UPLOAD%"
   - "%CMD_IN_ENV% conda config --show"
-  - "%CMD_IN_ENV% conda build --user vmtk --python %APP_CONDA_PY% --no-copy-test-source-files %PACKAGE_TO_BUILD%"
+  - "%CMD_IN_ENV% conda build --verify --user vmtk --token %ANACONDA_API_TOKEN% --python %APP_CONDA_PY% --no-copy-test-source-files %PACKAGE_TO_BUILD%"
