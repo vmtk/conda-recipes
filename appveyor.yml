@@ -26,29 +26,29 @@ environment:
       secure: fVJ4du4JeXvRvrVa/q4n9PODtmA0Q0mNRcnPxAjlYkioS7OD35G2zQLt3IsMJFz+
 
   matrix:
-    # - PYTHON: "C:\\Python36_64"
-    #   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-    #   PYTHON_VERSION: "3.6"
-    #   PYTHON_ARCH: "64"
-    #   CONDA_PY: "36"
-    #   APP_CONDA_PY: "3.6.1"
-    #   PACKAGE_TO_BUILD: "itk"
+    - PYTHON: "C:\\Python36_64"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      PYTHON_VERSION: "3.6"
+      PYTHON_ARCH: "64"
+      CONDA_PY: "36"
+      APP_CONDA_PY: "3.6.1"
+      PACKAGE_TO_BUILD: "itk"
 
-    # - PYTHON: "C:\\Python35_64"
-    #   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-    #   PYTHON_VERSION: "3.5"
-    #   PYTHON_ARCH: "64"
-    #   CONDA_PY: "35"
-    #   APP_CONDA_PY: "3.5.1"
-    #   PACKAGE_TO_BUILD: "vtk"
+    - PYTHON: "C:\\Python35_64"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      PYTHON_VERSION: "3.5"
+      PYTHON_ARCH: "64"
+      CONDA_PY: "35"
+      APP_CONDA_PY: "3.5.1"
+      PACKAGE_TO_BUILD: "vtk"
 
-    # - PYTHON: "C:\\Python36_64"
-    #   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-    #   PYTHON_VERSION: "3.6"
-    #   PYTHON_ARCH: "64"
-    #   CONDA_PY: "36"
-    #   APP_CONDA_PY: "3.6.1"
-    #   PACKAGE_TO_BUILD: "vtk"
+    - PYTHON: "C:\\Python36_64"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      PYTHON_VERSION: "3.6"
+      PYTHON_ARCH: "64"
+      CONDA_PY: "36"
+      APP_CONDA_PY: "3.6.1"
+      PACKAGE_TO_BUILD: "vtk"
 
     - PYTHON: "C:\\Python35_64"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
