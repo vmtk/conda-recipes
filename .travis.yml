@@ -1,0 +1,104 @@
+## Program: VMTK
+## Language:  Python
+## Date:      January 30, 2018
+## Version:   1.4
+##
+##   Copyright (c) Richard Izzo, Luca Antiga, All rights reserved.
+##   See LICENCE file for details.
+##
+##      This software is distributed WITHOUT ANY WARRANTY; without even
+##      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+##      PURPOSE.  See the above copyright notices for more information.
+##
+## Note: this code was contributed by
+##       Richard Izzo (Github @rlizzo)
+##       University at Buffalo
+
+# The language in this case has no bearing - we are going to be making use of "conda" for a
+# python distribution for the scientific python stack.
+language:
+  - cpp
+
+env:
+  global:
+    # destination conda channel 
+    - DESTINATION_CONDA_CHANNEL="vmtk"
+    - CONDA_INSTALL_LOCN="${HOME}/miniconda"
+    # Secure variable defines the BINSTAR_TOKEN (anaconda cloud) API KEY for vmtk repository expires 20 JAN 2020. 
+    - secure: "sbGmhS+nLnFpYEwMtfp+AY56P0f41sdDq/9BfoWhcf410QOWJeSS+My7L8sm8XLkT9NMvYya7PXjep2j9XiuxIPgDJFgrSOSnw2czzL1W9TzG+ORtl3uuT90hOe18njmvosYc7rs1nCoHiXmtBl72qAFlExQ1MMfpmRG/DA2Zt+YK1DAG52WEKhkZsE/P5b/5GsfYvU+u0CzxKPMd7T+qBJqIwdnsalFjMmelgNkZFJ0sB6xsLXvp9pzeXmLgsz5BvQGaCkbw0yKWGch0TOg3QS7XnZ4QJSec9ZW9MC0fDDN0z5ueCKhUwWuSYSBBQxmci6okp1cV13CW+1WtFnzx45OXxRTD5Fuq+STX8IJ4O+c+ultx0iQtp+A318bnTxfxCrM4SvecMqT7J2sorvaorQ6RGllQq/TEhQ3SKOFoRe7wM6Ve6VAhBm63HAuUhvRH3dUxACkXbHGdKfd6GAmNKzxkSRgyckQG2Z+GehtEScBRGKMcs4R/XAV2cXBAYkERwnZE1dHRWlqw1U3P/0RcE2w/h3MrmTkwnrSAb8fOdoeI+w51vf/BVGBQ8PpPjUuu8oGRisKWeo9SCKIVZnWwt7HVHNB0ANFS+06pWVByONQoJfqrhXjJVIgv2EGZSyDT1fAZDIVgGGR63CU3JRlGoDM0fOW8HQAMoLk5C+jf8M="
+
+# build matrix of environments to build against. 
+# note: for linux builds, sudo is required. This is not because we use any "sudo" commands
+#       instead, we use it to build a non-container image with TravisCI, which has more memory
+#       than a container image (if sudo was set to false). This is required because the build phase
+#       utilizes more memory than the container image has, causing a segfault. 
+matrix:
+  include:
+    # Matrix expansion to run all subsequent builds with each OS.
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: MATRIX_EVAL="PACKAGE=itk && TRPYTHON_VERSION=3.6"
+    - os: osx
+      osx_image: xcode9.2
+      compiler: clang
+      env: MATRIX_EVAL="PACKAGE=itk && TRPYTHON_VERSION=3.6"
+
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: MATRIX_EVAL="PACKAGE=vtk && TRPYTHON_VERSION=2.7"
+    - os: osx
+      osx_image: xcode9.2
+      compiler: clang
+      env: MATRIX_EVAL="PACKAGE=vtk && TRPYTHON_VERSION=2.7"
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: MATRIX_EVAL="PACKAGE=vtk && TRPYTHON_VERSION=3.5"
+    - os: osx
+      osx_image: xcode9.2
+      compiler: clang
+      env: MATRIX_EVAL="PACKAGE=vtk && TRPYTHON_VERSION=3.5"
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: MATRIX_EVAL="PACKAGE=vtk && TRPYTHON_VERSION=3.6"
+    - os: osx
+      osx_image: xcode9.2
+      compiler: clang
+      env: MATRIX_EVAL="PACKAGE=vtk && TRPYTHON_VERSION=3.6"
+
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: MATRIX_EVAL="PACKAGE=vmtk && TRPYTHON_VERSION=2.7.14"
+    - os: osx
+      osx_image: xcode9.2
+      compiler: clang
+      env: MATRIX_EVAL="PACKAGE=vmtk && TRPYTHON_VERSION=2.7.14"
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: MATRIX_EVAL="PACKAGE=vmtk && TRPYTHON_VERSION=3.5.1"
+    - os: osx
+      osx_image: xcode9.2
+      compiler: clang
+      env: MATRIX_EVAL="PACKAGE=vmtk && TRPYTHON_VERSION=3.5.1"
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: MATRIX_EVAL="PACKAGE=vmtk && TRPYTHON_VERSION=3.6.1"
+    - os: osx
+      osx_image: xcode9.2
+      compiler: clang
+      env: MATRIX_EVAL="PACKAGE=vmtk && TRPYTHON_VERSION=3.6.1"
+
+before_install:
+  - eval "${MATRIX_EVAL}"
+
+install:
+  - source continuous-integration/travis/install.sh
+
+script:
+  - conda build --user vmtk --python $TRPYTHON_VERSION --no-copy-test-source-files $TRAVIS_BUILD_DIR/$PACKAGE/
