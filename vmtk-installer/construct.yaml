@@ -1,5 +1,9 @@
 name: VMTK
-version: 1.4
+version: 1.4.0
+company: Orobix Srl.
+
+# be sure to change based on which python version is being installed
+installer_filename: VMTK-1.4.0-Python3.6-Windows-x86_64.exe
 
 install_in_dependency_order: True
 
@@ -8,30 +12,44 @@ install_in_dependency_order: True
 # This is needed for libhdf5 which is included by both itk and vmtk
 ignore_duplicate_files: True
 
-channels:
+channels: &id1
   - https://conda.anaconda.org/vmtk
+  - https://conda.anaconda.org/conda-forge
   - http://repo.continuum.io/pkgs/free/
   - http://repo.continuum.io/pkgs/msys2
   
 specs:
   - python 3.6.1
   - vmtk 1.4
+  - h5py
   - menuinst
+  - console_shortcut
+  - conda
 
 license_file: LICENSE
 
+# due to some wierdness with constructor at time of writing (20 March 2018),
+# numpy is not able to be installed as part of the spec file. Instead, we exclude
+# it from the build, then install it in the post-install.bat script. 
+exclude:
+  - numpy 
+  
+post_install: post-install.bat [win]
 
-# By default, no conda packages are preserved after running the created
-# installer in the pkgs directory. Using this option changes the default
-# behavior.
-keep_pkgs: True
+# The conda default channels which are used when running a conda which
+# was installed be the constructor created (requires conda in the
+# specifications) installer
+conda_default_channels: *id1
 
+# If set, a .condarc file is written to the root of the enviornment if there are any channels 
+# or conda_default_channels set.
+write_condarc: True
 
 # Path to an image (in any common image format .png, .jpg, .tif, etc.)
 #  which is used as the welcome image for the Windows installer. 
 # The image is re-sized to 164 x 314 pixels. By default, an image
 # is automatically generated.
-welcome_image: vmtk-icon.ico
+welcome_image: vmtk-logo-2.png
 
 # Like welcome_image for Windows, re-sized to 256 x 256 pixels.
 icon_image: vmtk-icon.ico
