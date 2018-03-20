@@ -8,7 +8,7 @@ source:
   md5: {{ vtk_md5 }}
 
 build:
-  number: 10
+  number: 1
   features:
     - vc14                 # [win and (py35 or py36)]
   skip_compile_pyc:
