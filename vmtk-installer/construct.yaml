@@ -24,7 +24,8 @@ specs:
   - h5py
   - menuinst [win]
   - console_shortcut [win]
-  - conda
+  - conda [win or osx]
+  - numpy 1.13 [osx]
 
 license_file: LICENSE
 
@@ -32,7 +33,7 @@ license_file: LICENSE
 # numpy is not able to be installed as part of the spec file. Instead, we exclude
 # it from the build, then install it in the post-install.bat script. 
 exclude:
-  - numpy 
+  - numpy [win]
   
 post_install: post-install.bat [win]
 post_install: post-install.sh [osx]
@@ -44,7 +45,8 @@ conda_default_channels: *id1
 
 # type of the installer being created.  Possible values are "sh", "pkg",
 # and "exe".  By default, the type is "sh" on Unix, and "exe" on Windows.
-installer_type: pkg                   [osx]
+installer_type: pkg  [osx]
+installer_type: exe  [win]
 
 # If set, a .condarc file is written to the root of the enviornment if there are any channels 
 # or conda_default_channels set.
