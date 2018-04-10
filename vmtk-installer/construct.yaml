@@ -4,8 +4,10 @@ company: Orobix Srl.
 
 # be sure to change based on which python version is being installed
 # installer_filename: VMTK-1.4.0-Python3.6-Windows-x86_64.exe
+installer_filename: VMTK-1.4.0-Py27-MacOSX-x86_64.pkg
 
-install_in_dependency_order: True
+install_in_dependency_order: True [win]
+install_in_dependency_order: False [osx]
 
 # By default, constructor will error out when adding packages with
 # duplicate files in them. Enable this option to warn instead and continue.
@@ -13,13 +15,13 @@ install_in_dependency_order: True
 ignore_duplicate_files: True
 
 channels: &id1
-  - https://conda.anaconda.org/rlizzo
+  - https://conda.anaconda.org/vmtk
   - https://conda.anaconda.org/conda-forge
   - http://repo.continuum.io/pkgs/free/
   - http://repo.continuum.io/pkgs/msys2
   
 specs:
-  - python 3.6.1
+  - python 2.7.14
   - vmtk 1.4
   - h5py
   - menuinst [win]
@@ -34,9 +36,9 @@ license_file: LICENSE
 # it from the build, then install it in the post-install.bat script. 
 exclude:
   - numpy [win]
+  - hdf5 [osx]
   
 post_install: post-install.bat [win]
-post_install: post-install.sh [osx]
 
 # The conda default channels which are used when running a conda which
 # was installed be the constructor created (requires conda in the
@@ -50,16 +52,19 @@ installer_type: exe  [win]
 
 # If set, a .condarc file is written to the root of the enviornment if there are any channels 
 # or conda_default_channels set.
-write_condarc: True
+write_condarc: True [win]
 
 # Path to an image (in any common image format .png, .jpg, .tif, etc.)
 #  which is used as the welcome image for the Windows installer. 
 # The image is re-sized to 164 x 314 pixels. By default, an image
 # is automatically generated.
-welcome_image: vmtk-logo-2.png
+welcome_image: VMTK-Logo-2.png
 
-header_image: vmtk-logo-2.png
+header_image: VMTK-Logo-2.png
 
 # Like welcome_image for Windows, re-sized to 256 x 256 pixels.
 icon_image: vmtk-icon.ico [win]
 icon_image: vmtk-icon.icns [osx]
+
+keep_pkgs: True [osx]
+attempt_hardlinks: True [osx]
