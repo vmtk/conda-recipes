@@ -3,7 +3,7 @@ version: 1.4.0
 company: Orobix Srl.
 
 # be sure to change based on which python version is being installed
-installer_filename: VMTK-1.4.0-Python3.6-Windows-x86_64.exe
+# installer_filename: VMTK-1.4.0-Python3.6-Windows-x86_64.exe
 
 install_in_dependency_order: True
 
@@ -13,7 +13,7 @@ install_in_dependency_order: True
 ignore_duplicate_files: True
 
 channels: &id1
-  - https://conda.anaconda.org/vmtk
+  - https://conda.anaconda.org/rlizzo
   - https://conda.anaconda.org/conda-forge
   - http://repo.continuum.io/pkgs/free/
   - http://repo.continuum.io/pkgs/msys2
@@ -22,8 +22,8 @@ specs:
   - python 3.6.1
   - vmtk 1.4
   - h5py
-  - menuinst
-  - console_shortcut
+  - menuinst [win]
+  - console_shortcut [win]
   - conda
 
 license_file: LICENSE
@@ -35,11 +35,16 @@ exclude:
   - numpy 
   
 post_install: post-install.bat [win]
+post_install: post-install.sh [osx]
 
 # The conda default channels which are used when running a conda which
 # was installed be the constructor created (requires conda in the
 # specifications) installer
 conda_default_channels: *id1
+
+# type of the installer being created.  Possible values are "sh", "pkg",
+# and "exe".  By default, the type is "sh" on Unix, and "exe" on Windows.
+installer_type: pkg                   [osx]
 
 # If set, a .condarc file is written to the root of the enviornment if there are any channels 
 # or conda_default_channels set.
@@ -51,5 +56,8 @@ write_condarc: True
 # is automatically generated.
 welcome_image: vmtk-logo-2.png
 
+header_image: vmtk-logo-2.png
+
 # Like welcome_image for Windows, re-sized to 256 x 256 pixels.
-icon_image: vmtk-icon.ico
+icon_image: vmtk-icon.ico [win]
+icon_image: vmtk-icon.icns [osx]

@@ -1,0 +1,11 @@
+{
+    "menu_name": "VMTK",
+    "menu_items":
+        [
+            {
+                "cmd": "${BIN_DIR}/vmtk",
+                "name": "VMTK",
+                "icns": "${MENU_DIR}/vmtk-icon.icns"
+            }
+        ]
+}
