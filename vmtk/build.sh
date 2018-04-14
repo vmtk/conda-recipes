@@ -57,6 +57,10 @@ if [ `uname` = "Darwin" ]; then
     -DCMAKE_CXX_EXTENSIONS=OFF
 
     ninja install
+
+    mkdir -p "$PREFIX/Menu"
+    cp "$RECIPE_DIR/menu-osx.json" "$PREFIX/Menu"
+    cp "$RECIPE_DIR/vmtk-icon.icns" "$PREFIX/Menu"
 fi
 
 if [ `uname` = "Linux" ]; then
